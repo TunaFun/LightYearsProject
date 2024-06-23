@@ -52,6 +52,14 @@ namespace ly
         Tick(DeltaTime);
     }
 
+    void World::Render(sf::RenderWindow& Window)
+    {
+        for (SharedPtr<Actor> Actor : Actors)
+        {
+            Actor->Render(Window);
+        }
+    }
+
     void World::BeginPlay()
     {
         //LOG("Began play!");
@@ -59,6 +67,6 @@ namespace ly
 
     void World::Tick(float DeltaTime)
     {
-        LOG("Ticking!");
+        
     }
 }

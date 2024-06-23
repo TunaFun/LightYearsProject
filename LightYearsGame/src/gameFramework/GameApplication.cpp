@@ -10,11 +10,11 @@ ly::Application* GetApplication()
 namespace ly
 {
     GameApplication::GameApplication()
+        : Application(600, 800, "LightYears", sf::Style::Titlebar | sf::Style::Close)
     {
         WeakPtr<World> NewWorld = LoadWorld<World>();
-        NewWorld.lock()->SpawnActor<Actor>();
-        ActorToDestroy = NewWorld.lock()->SpawnActor<Actor>();
-        counter = 0.0f;
+        auto NewActor = NewWorld.lock()->SpawnActor<Actor>();
+        NewActor.lock()->SetTexture("F:/MniejszeProjekty/LightYearsProject/LightYearsGame/assets/SpaceShooterRedux/PNG/playerShip1_blue.png");
     }
     
     GameApplication::~GameApplication()
@@ -24,13 +24,5 @@ namespace ly
 
     void GameApplication::Tick(float DeltaTime)
     {
-        counter += DeltaTime;
-        if (counter > 3.0f)
-        {
-            if (!ActorToDestroy.expired())
-            {
-               ActorToDestroy.lock()->Destroy();
-            }
-        }
     }
 }

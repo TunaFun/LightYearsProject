@@ -9,7 +9,7 @@ namespace ly
     {
     public:
         
-        Application();
+        Application(unsigned int Width, unsigned int Height, const std::string& Title,sf::Uint32 Style);
         void Run();
 
         template<typename WorldT>

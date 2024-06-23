@@ -6,13 +6,13 @@
 
 namespace ly
 {
-    Application::Application()
-        : Window{sf::VideoMode(600, 800), "Light Years"},
+    Application::Application(unsigned int Width, unsigned int Height, const std::string& Title, sf::Uint32 Style)
+    : Window{sf::VideoMode(Width, Height), Title, Style},
         TargetFramerate{60.0f},
         TickClock{},
         CurrentWorld{nullptr}
     {
-      
+        
     }
 
     void Application::Run()
@@ -66,18 +66,15 @@ namespace ly
     void Application::RenderInternal()
     {
         Window.clear();
-        
         Render();
-        
         Window.display();
     }
 
     void Application::Render()
     {
-        sf::RectangleShape rect{sf::Vector2f{100, 100} };
-        rect.setOrigin(50, 50);
-        rect.setFillColor(sf::Color::Cyan);
-        rect.setPosition(Window.getSize().x/2, Window.getSize().y/2);
-        Window.draw(rect);
+        if (CurrentWorld)
+        {
+            CurrentWorld->Render(Window);
+        }
     }
 }
