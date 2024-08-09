@@ -1,8 +1,11 @@
 #pragma once
+#include <memory>
+#include "Core.h"
+#include "Delegate.h"
 
 namespace ly
 {
-    class Object
+    class Object : public std::enable_shared_from_this<Object>
     {
     
     public:
@@ -10,8 +13,12 @@ namespace ly
         Object();
         virtual ~Object();
         
-        void Destroy();
+        virtual void Destroy();
         bool IsPendingDestroy() const { return PendingDestroy; }
+
+        WeakPtr<Object> GetWeakRef();
+        WeakPtr<const Object> GetWeakRef() const;
+        Delegate<Object*> OnDestroy;
     private:
         bool PendingDestroy;
     };

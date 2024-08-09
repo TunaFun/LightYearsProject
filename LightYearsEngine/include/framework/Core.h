@@ -4,6 +4,7 @@
 #include <memory>
 #include <map>
 #include <unordered_map>
+#include <unordered_set>
 
 namespace ly
 {
@@ -25,8 +26,11 @@ template<typename KeyT, typename ValueT, typename Predicate = std::less<KeyT>>
 
 template<typename KeyT, typename ValueT, typename Hasher = std::hash<KeyT>>
     using Dictionary = std::unordered_map<KeyT, ValueT, Hasher>;
-    
-    
+
+template<typename T>
+    using Set = std::unordered_set<T>;
+
+using uint8 = unsigned char;
 //macro defining
 #define LOG(M, ...) printf(M "\n", ##__VA_ARGS__)
 }

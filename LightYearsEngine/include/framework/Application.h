@@ -16,9 +16,13 @@ namespace ly
         WeakPtr<WorldT> LoadWorld();
 
         virtual ~Application();
-        
+        sf::Vector2u GetWindowSize() const;
+        sf::RenderWindow& GetWindow() {return Window;}
+        const sf::RenderWindow& GetWindow() const{return Window;}
+
     private:
-        
+
+        bool DispatchEvent(const sf::Event& WindowEvent);
         void TickInternal(float DeltaTime);
         void RenderInternal();
         
@@ -30,6 +34,8 @@ namespace ly
         sf::Clock TickClock;
 
         SharedPtr<World> CurrentWorld;
+        sf::Clock CleanCycleClock;
+        float CleanCycleInterval;
     };
 
     template <typename WorldT>

@@ -1,7 +1,10 @@
 ﻿#include <iostream>
 #include <stdio.h>
 #include "framework/Application.h"
+#include "framework/AssetManager.h"
 #include "framework/Core.h"
+#include "framework/PhysicsSystem.h"
+#include "framework/TimerManager.h"
 #include "framework/World.h"
 
 namespace ly
@@ -10,7 +13,9 @@ namespace ly
     : Window{sf::VideoMode(Width, Height), Title, Style},
         TargetFramerate{60.0f},
         TickClock{},
-        CurrentWorld{nullptr}
+        CurrentWorld{nullptr},
+        CleanCycleClock{},
+        CleanCycleInterval{2.0f}
     {
         
     }
@@ -30,6 +35,10 @@ namespace ly
                 {
                     Window.close();
                 }
+                else
+                {
+                    DispatchEvent(WindowEvent);
+                }
             }
 
             const float FrameDeltaTime = TickClock.restart().asSeconds();
@@ -47,20 +56,51 @@ namespace ly
     {
     }
 
+    sf::Vector2u Application::GetWindowSize() const
+    {
+        return Window.getSize();
+    }
+
+    bool Application::DispatchEvent(const sf::Event& WindowEvent)
+    {
+        if (CurrentWorld)
+        {
+           return CurrentWorld->DispatchEvent(WindowEvent);
+        }
+        return false;
+    }
+
     void Application::TickInternal(float DeltaTime)
     {
         Tick(DeltaTime);
-        
+
+        //Tick the world and all actors
         if (CurrentWorld)
         {
             CurrentWorld->BeginPlayInternal();
             CurrentWorld->TickInternal(DeltaTime);
         }
+        //Tick the timers
+        TimerManager::Get().UpdateTimers(DeltaTime);
+        
+        //Tick the physics
+        PhysicsSystem::Get().Step(DeltaTime);
+
+        //Cleanup actors and unused texture
+        if (CleanCycleClock.getElapsedTime().asSeconds() >= CleanCycleInterval)
+        {
+            CleanCycleClock.restart();
+            AssetManager::Get().CleanCycle();
+            if (CurrentWorld)
+            {
+                CurrentWorld->CleanCycle();
+            }
+        }
     }
 
     void Application::Tick(float DeltaTime)
     {
-        //LOG("TICK!");
+        
     }
 
     void Application::RenderInternal()

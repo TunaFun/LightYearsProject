@@ -1,6 +1,8 @@
 ﻿#include "gameFramework/GameApplication.h"
-#include "framework/World.h"
-#include "framework/Actor.h"
+#include "config.h"
+#include "framework/AssetManager.h"
+#include "level/LevelOne.h"
+
 
 ly::Application* GetApplication()
 {
@@ -12,17 +14,7 @@ namespace ly
     GameApplication::GameApplication()
         : Application(600, 800, "LightYears", sf::Style::Titlebar | sf::Style::Close)
     {
-        WeakPtr<World> NewWorld = LoadWorld<World>();
-        auto NewActor = NewWorld.lock()->SpawnActor<Actor>();
-        NewActor.lock()->SetTexture("F:/MniejszeProjekty/LightYearsProject/LightYearsGame/assets/SpaceShooterRedux/PNG/playerShip1_blue.png");
-    }
-    
-    GameApplication::~GameApplication()
-    {
-        
-    }
-
-    void GameApplication::Tick(float DeltaTime)
-    {
+        AssetManager::Get().SetAssetRootDirectory(GetResourceDirectory());
+        WeakPtr<World> NewWorld = LoadWorld<LevelOne>();
     }
 }
