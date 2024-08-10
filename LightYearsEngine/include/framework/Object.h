@@ -19,7 +19,12 @@ namespace ly
         WeakPtr<Object> GetWeakRef();
         WeakPtr<const Object> GetWeakRef() const;
         Delegate<Object*> OnDestroy;
+        unsigned int GetUniqueId() const { return UniqueId; }
     private:
         bool PendingDestroy;
+        unsigned int UniqueId;
+
+        static unsigned int UniqueIdCounter;
+        static unsigned int GetNextUniqueId();
     };
 }

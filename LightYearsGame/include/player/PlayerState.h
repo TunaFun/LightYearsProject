@@ -20,7 +20,7 @@ namespace ly
         unsigned int GetScore() const {return Score;}
 
         Delegate<int> OnLifeChanged;
-        Delegate<int> OnScoreChanged;
+        Delegate<unsigned int> OnScoreChanged;
         Delegate<> OnGameFinished;
         
     private:

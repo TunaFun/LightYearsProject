@@ -29,6 +29,11 @@ namespace ly
         Text.setRotation(Rotation);
     }
 
+    sf::FloatRect TextWidget::GetBounds() const
+    {
+        return Text.getGlobalBounds();
+    }
+
     void TextWidget::Draw(sf::RenderWindow& Window)
     {
         Window.draw(Text);

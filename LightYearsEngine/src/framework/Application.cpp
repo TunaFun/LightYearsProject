@@ -33,7 +33,7 @@ namespace ly
             {
                 if (WindowEvent.type == sf::Event::EventType::Closed)
                 {
-                    Window.close();
+                    Quit();
                 }
                 else
                 {
@@ -50,6 +50,14 @@ namespace ly
                 RenderInternal();
             }
         }
+    }
+
+    void Application::Quit()
+    {
+       if (Window.isOpen())
+       {
+           Window.close();
+       }
     }
 
     Application::~Application()
@@ -77,7 +85,7 @@ namespace ly
         //Tick the world and all actors
         if (CurrentWorld)
         {
-            CurrentWorld->BeginPlayInternal();
+            
             CurrentWorld->TickInternal(DeltaTime);
         }
         //Tick the timers
@@ -95,6 +103,12 @@ namespace ly
             {
                 CurrentWorld->CleanCycle();
             }
+        }
+
+        if (PendingWorld && PendingWorld != CurrentWorld)
+        {
+            CurrentWorld = PendingWorld;
+            CurrentWorld->BeginPlayInternal();
         }
     }
 

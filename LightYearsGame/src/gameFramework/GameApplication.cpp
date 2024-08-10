@@ -2,6 +2,7 @@
 #include "config.h"
 #include "framework/AssetManager.h"
 #include "level/LevelOne.h"
+#include "level/MainMenu.h"
 
 
 ly::Application* GetApplication()
@@ -15,6 +16,6 @@ namespace ly
         : Application(600, 800, "LightYears", sf::Style::Titlebar | sf::Style::Close)
     {
         AssetManager::Get().SetAssetRootDirectory(GetResourceDirectory());
-        WeakPtr<World> NewWorld = LoadWorld<LevelOne>();
+        WeakPtr<World> NewWorld = LoadWorld<MainMenu>();
     }
 }

@@ -1,6 +1,7 @@
 ﻿#pragma once
 #include <SFML/Graphics.hpp>
 #include "Core.h"
+#include "World.h"
 
 namespace ly
 {
@@ -11,7 +12,7 @@ namespace ly
         
         Application(unsigned int Width, unsigned int Height, const std::string& Title,sf::Uint32 Style);
         void Run();
-
+        void Quit();
         template<typename WorldT>
         WeakPtr<WorldT> LoadWorld();
 
@@ -34,6 +35,7 @@ namespace ly
         sf::Clock TickClock;
 
         SharedPtr<World> CurrentWorld;
+        SharedPtr<World> PendingWorld;
         sf::Clock CleanCycleClock;
         float CleanCycleInterval;
     };
@@ -42,7 +44,7 @@ namespace ly
     WeakPtr<WorldT> Application::LoadWorld()
     {
         SharedPtr<WorldT> newWorld {new WorldT {this} };
-        CurrentWorld = newWorld;
+        PendingWorld = newWorld;
         return newWorld;
     }
 }

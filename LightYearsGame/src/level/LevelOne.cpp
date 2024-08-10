@@ -38,12 +38,13 @@ namespace ly
     void LevelOne::RespawnPlayer(Object* DestroyedObj)
     {
         Player = PlayerManager::Get().GetPlayer()->SpawnSpaceship(this);
-        if (!Player.expired())
+        if (Player.lock() != nullptr && !Player.expired())
         {
             Player.lock()->OnDestroy.BindAction(GetWeakRef(), &LevelOne::RespawnPlayer);
         }
         else
         {
+            Player = WeakPtr<PlayerSpaceship>{};
             GameOver();
         }
     }

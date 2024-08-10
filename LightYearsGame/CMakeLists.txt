@@ -57,6 +57,9 @@ add_executable(${LIGHT_YEARS_GAME_TARGET_NAME}
     ${CMAKE_CURRENT_SOURCE_DIR}/include/level/LevelOne.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/level/LevelOne.cpp  
     
+    ${CMAKE_CURRENT_SOURCE_DIR}/include/level/MainMenu.h
+    ${CMAKE_CURRENT_SOURCE_DIR}/src/level/MainMenu.cpp 
+    
     ${CMAKE_CURRENT_SOURCE_DIR}/include/weapon/ThreeWayShooter.h
     ${CMAKE_CURRENT_SOURCE_DIR}/src/weapon/ThreeWayShooter.cpp
     

@@ -22,6 +22,7 @@ namespace ly
         void CleanCycle();
         void AddStage(const SharedPtr<GameStage>& Stage);
         bool DispatchEvent(const sf::Event& WindowEvent);
+        Application* GetApplication() const {return AppOwner;}
         
         template<typename ActorType, typename... Args>
         WeakPtr<ActorType> SpawnActor(Args... args);

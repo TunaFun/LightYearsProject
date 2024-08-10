@@ -31,7 +31,18 @@ namespace ly
     {
         IsVisible = Visibility;
     }
-    
+
+    sf::FloatRect Widget::GetBounds() const
+    {
+        return sf::FloatRect{};
+    }
+
+    sf::Vector2f Widget::GetCenterPosition() const
+    {
+        auto Bounds = GetBounds();
+        return sf::Vector2f{Bounds.left + Bounds.width/2, Bounds.top + Bounds.height/2};
+    }
+
     Widget::Widget()
         : IsVisible{true},
         WidgetTransform{}

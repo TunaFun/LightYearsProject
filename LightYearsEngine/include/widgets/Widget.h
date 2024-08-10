@@ -14,7 +14,8 @@ namespace ly
         float GetWidgetRotation() const { return WidgetTransform.getRotation();}
         void SetVisibility(bool Visibility);
         bool GetVisiblity() const {return IsVisible;}
-        
+        virtual sf::FloatRect GetBounds() const;
+        sf::Vector2f GetCenterPosition() const;
     protected:
         Widget();
         

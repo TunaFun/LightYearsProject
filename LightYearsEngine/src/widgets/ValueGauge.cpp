@@ -1,6 +1,7 @@
 #include "widgets/ValueGauge.h"
 
 #include "framework/AssetManager.h"
+#include "framework/Math.h"
 
 namespace ly
 {
@@ -28,9 +29,12 @@ namespace ly
         Percent = Value/MaxValue;
         std::string DisplayString = std::to_string(static_cast<int>(Value)) + "/" + std::to_string(static_cast<int>(MaxValue));
         Text.setString(DisplayString);
+        CenterText();
 
         sf::Vector2f barSize = BarBack.getSize();
         BarFront.setSize({barSize.x * Percent, barSize.y});
+        sf::Color Color = LerpColor(sf::Color::Red, sf::Color::Green, Percent);
+        BarFront.setFillColor(Color);
     }
 
     void ValueGauge::Draw(sf::RenderWindow& Window)
@@ -45,6 +49,7 @@ namespace ly
         BarBack.setPosition(Location);
         BarFront.setPosition(Location);
         Text.setPosition(Location);
+        CenterText();
     }
 
     void ValueGauge::RotationUpdated(float Rotation)
@@ -52,5 +57,18 @@ namespace ly
         BarBack.setRotation(Rotation);
         BarFront.setRotation(Rotation);
         Text.setRotation(Rotation);
+        CenterText();
+    }
+
+    sf::FloatRect ValueGauge::GetBounds() const
+    {
+        return BarBack.getGlobalBounds();
+    }
+
+    void ValueGauge::CenterText()
+    {
+        auto Center = GetCenterPosition();
+        sf::Vector2f Offset = {Text.getGlobalBounds().width/2, Text.getGlobalBounds().height};
+        Text.setPosition(Center - Offset);
     }
 }

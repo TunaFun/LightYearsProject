@@ -17,7 +17,8 @@ namespace ly
     private:
         void LocationUpdated(const sf::Vector2f& Location) override;
         void RotationUpdated(float Rotation) override;
-        
+        sf::FloatRect GetBounds() const override;
+        void CenterText();
         SharedPtr<sf::Font> Font;
         sf::Text Text;
         float Percent;

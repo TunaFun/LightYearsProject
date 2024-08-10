@@ -16,7 +16,7 @@ namespace ly
 
     PlayerState* PlayerManager::GetPlayer(int Index)
     {
-        if(Index >= 0 && Index <= Players.size())
+        if(Index >= 0 && Index < Players.size())
         {
             return &Players[Index];
         }
@@ -25,7 +25,7 @@ namespace ly
 
     const PlayerState* PlayerManager::GetPlayer(int Index) const
     {
-        if(Index >= 0 && Index <= Players.size())
+        if(Index >= 0 && Index < Players.size())
         {
             return &Players[Index];
         }

@@ -5,8 +5,10 @@
 
 namespace ly
 {
+    unsigned int Object::UniqueIdCounter = 0;
     Object::Object()
-        :PendingDestroy{false}
+        :PendingDestroy{false},
+        UniqueId{GetNextUniqueId()}
     {
     }
 
@@ -32,5 +34,10 @@ namespace ly
     WeakPtr<const Object> Object::GetWeakRef() const
     {
         return weak_from_this();
+    }
+
+    unsigned Object::GetNextUniqueId()
+    {
+        return UniqueIdCounter++;
     }
 }
